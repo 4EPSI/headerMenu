@@ -1,0 +1,35 @@
+@use '../variables' as *;
+@use '../mixins'    as *;
+
+.header-top {
+  padding:  8px 40px;
+  background: $color-bg-light;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $color-text;
+  &__location {
+    display: flex;
+  }
+  &__icon {
+    a {
+      margin-right: 12px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    svg {
+      margin-right: 4px;
+      margin-bottom: 0;
+    }
+  }
+  &__links {
+    color: rgba($color-text, 0.8);
+    a {
+      margin-right: 16px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

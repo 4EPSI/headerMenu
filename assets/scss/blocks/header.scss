@@ -1,0 +1,126 @@
+@use '../variables' as *;
+@use '../mixins'    as *;
+
+.header {
+  background-color: #fff;
+  // padding: 20px 0;
+  // border-bottom: 1px solid #e0e0e0;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    text-decoration: none;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    &--open {
+      display: flex !important;
+      flex-direction: column;
+      position: absolute;
+      top: 70px;
+      right: 0;
+      width: 100%;
+      background: #fff;
+      padding: 20px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__login {
+    padding: 8px 16px;
+    background-color: #1f64ff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0047c6;
+    }
+  }
+
+  &__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    .burger__line {
+      width: 24px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+      transition: background-color 0.3s ease;
+    }
+
+    &:hover .burger__line {
+      background-color: #1f64ff;
+    }
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+}
+
+.nav {
+  &__list {
+    display: flex;
+    gap: 24px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  &__item {}
+
+  &__link {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      height: 2px;
+      width: 0;
+      background-color: #1f64ff;
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      color: #1f64ff;
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}

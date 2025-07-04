@@ -1,0 +1,9 @@
+@use './variables' as *;
+
+@mixin media($point) {
+  @if $point == tablet {
+    @media (max-width: $bp-tablet) { @content; }
+  } @else if $point == mobile {
+    @media (max-width: $bp-mobile) { @content; }
+  }
+}
