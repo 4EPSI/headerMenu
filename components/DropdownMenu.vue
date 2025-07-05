@@ -6,13 +6,14 @@
         v-for="(item, i) in items"
         :key="i"
         class="dropdown__item"
+        :class="{ 'dropdown__item--active': i === active }"
         @mouseenter="active = i"
       >
         <div class="dropdown__left__title">
-          <svgo-phone-rudjosz />
+          <component :is="item.icon" class="dropdown__icon" />
           {{ item.title }}
         </div>
-        <svgo-right-arrow />
+        <svgo-right-arrow class="dropdown__arrow" />
       </button>
     </aside>
 
@@ -22,7 +23,9 @@
         <h3>{{ current.titleMain }}</h3>
         <ul>
           <li v-for="c in current.children1" :key="c.title">
-            {{ c.title }} <span>{{ c.count }}</span>
+            <nuxt-link to="#">
+              {{ c.title }} <span>{{ c.count }}</span>
+            </nuxt-link>
           </li>
         </ul>
       </div>
@@ -31,7 +34,9 @@
         <h3>{{ current.titleSecondary }}</h3>
         <ul>
           <li v-for="c in current.children2" :key="c.title">
-            {{ c.title }} <span>{{ c.count }}</span>
+            <nuxt-link to="#">
+              {{ c.title }} <span>{{ c.count }}</span>
+            </nuxt-link>
           </li>
         </ul>
       </div>
@@ -49,6 +54,7 @@ const props = defineProps<{
 const items = [
   {
     title: 'Смартфоны и гаджеты',
+    icon: 'svgo-phone-rudjosz',
     titleMain: 'Смартфоны',
     children1: [
       { title: 'Apple iPhone', count: 123 },
@@ -60,6 +66,10 @@ const items = [
       { title: 'Смарт-часы',   count: 15 },
       { title: 'Смарт-кольца', count: 34 }
     ]
+  },
+  {
+    title: 'Ноутбуки и компьютеры',
+    icon: 'svgo-laptop'
   }
   // …добавь остальные пункты
 ]
