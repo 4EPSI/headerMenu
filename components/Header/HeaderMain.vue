@@ -13,12 +13,18 @@
           :class="{ 'active': isActive }"
           @click="toggle"
           aria-label="Toggle menu"
+          ref="burgerBtn"
         >
           <span class="burger-line"></span>
           <span class="burger-line"></span>
           <span class="burger-line"></span>
         </button>
-  
+        
+        <DropdownMenu 
+          v-if="isActive" 
+          @close="isActive = false" 
+          :ignore-element="burgerBtn"
+        />
         <div class="search-container">
           <input
             type="text"
@@ -129,11 +135,12 @@ watch(isActive, (newValue) => {
   emit('toggle', newValue)
 })
 
-
+// watch(isActive, v => emit('toggle', v))
 
 const current = ref('ru')
 const setLang = (lang) => {
   current.value = lang
   // Здесь можно добавить логику смены языка приложения
 }
+const burgerBtn = ref(null)
 </script>
