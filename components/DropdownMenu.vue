@@ -13,7 +13,7 @@
           <component :is="item.icon" class="dropdown__icon" />
           {{ item.title }}
         </div>
-        <svgo-right-arrow class="dropdown__arrow" />
+        <svgo-right-arrow v-if="item.arrow" class="dropdown__arrow" />
       </button>
     </aside>
 
@@ -25,6 +25,10 @@
           <li v-for="c in current.children1" :key="c.title">
             <nuxt-link to="#">
               {{ c.title }} <span>{{ c.count }}</span>
+              <svgo-right-arrow 
+              v-if="c.arrow" 
+              class="dropdown__arrow__right" 
+            />
             </nuxt-link>
           </li>
         </ul>
@@ -57,19 +61,52 @@ const items = [
     icon: 'svgo-phone-rudjosz',
     titleMain: 'Смартфоны',
     children1: [
-      { title: 'Apple iPhone', count: 123 },
-      { title: 'Смартфоны',    count: 227 },
-      { title: 'iPhone 16',    count: 120 }
+      { title: 'Apple iPhone', count: 123, arrow: false },
+      { title: 'Смартфоны',    count: 227, arrow: true },
+      { title: 'iPhone 16',    count: 120, arrow: false },
+      { title: 'Складные',    count: 30, arrow: false },
+      { title: 'realme',    count: 120, arrow: false },
+      { title: 'Huawei Mate X6',    count: 100, arrow: false },
+      { title: 'Кнопочные',    count: 23, arrow: false },
+      { title: 'Домашние',    count: 17, arrow: false },
+      { title: 'Samsung',    count: 27, arrow: false }
     ],
     titleSecondary: 'Гаджеты',
     children2: [
       { title: 'Смарт-часы',   count: 15 },
-      { title: 'Смарт-кольца', count: 34 }
+      { title: 'Смарт-кольца', count: 34 },
+      { title: 'Наушники', count: 21 },
+      { title: 'Гарнитуры', count: 12 },
+      { title: 'Портативное аудио', count: 42 },
+      { title: 'Умные гаджеты', count: 46 },
+      { title: 'Очки VR', count: 49 },
+      { title: 'Для блогеров', count: 32 },
     ]
   },
   {
     title: 'Ноутбуки и компьютеры',
-    icon: 'svgo-laptop'
+    icon: 'svgo-laptop',
+    arrow: true
+  },
+  {
+    title: 'Телевизоры и цифровое ТВ',
+    icon: 'svgo-tv',
+    arrow: true
+  },
+  {
+    title: 'Аудиотехника',
+    icon: 'svgo-audio',
+    arrow: true
+  },
+  {
+    title: 'Акции',
+    icon: 'svgo-stock-bg',
+    arrow: false
+  },
+  {
+    title: 'Новинки',
+    icon: 'svgo-new',
+    arrow: false
   }
   // …добавь остальные пункты
 ]

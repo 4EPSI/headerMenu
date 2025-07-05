@@ -12,10 +12,19 @@
     display: flex;
   }
   &__icon {
+    display: flex;
     a {
+      display: flex;
+      align-items: center;
       margin-right: 12px;
       &:last-child {
         margin-right: 0;
+      }
+      &:hover {
+        color: $color-primary;
+        svg {
+          color: $color-primary;
+        }
       }
     }
     svg {
@@ -29,6 +38,9 @@
       margin-right: 16px;
       &:last-child {
         margin-right: 0;
+      }
+      &:hover {
+        color: $color-primary;
       }
     }
   }
