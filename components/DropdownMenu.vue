@@ -3,7 +3,7 @@
     <!-- Левый список -->
     <aside class="dropdown__left">
       <button
-        v-for="(item, i) in items"
+        v-for="(item, i) in props.items"
         :key="i"
         class="dropdown__item"
         :class="{ 'dropdown__item--active': i === active }"
@@ -25,10 +25,7 @@
           <li v-for="c in current.children1" :key="c.title">
             <nuxt-link to="#">
               {{ c.title }} <span>{{ c.count }}</span>
-              <svgo-right-arrow 
-              v-if="c.arrow" 
-              class="dropdown__arrow__right" 
-            />
+              <svgo-right-arrow v-if="c.arrow" class="dropdown__arrow__right" />
             </nuxt-link>
           </li>
         </ul>
@@ -49,83 +46,41 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+
+/** Тип одного пункта меню */
+export type ItemType = {
+  title: string
+  icon: string
+  arrow?: boolean
+  titleMain?: string
+  titleSecondary?: string
+  children1?: { title: string; count: number; arrow?: boolean }[]
+  children2?: { title: string; count: number }[]
+}
 
 const props = defineProps<{
+  /** Список пунктов меню */
+  items: ItemType[]
+  /** Кнопка-бургер, чтобы не закрывать меню при клике по ней */
   ignoreElement?: HTMLElement | null
+  /** Какой пункт активен при открытии */
+  defaultActive?: number
 }>()
 
-/* ——— данные меню ——— */
-const items = [
-  {
-    title: 'Смартфоны и гаджеты',
-    icon: 'svgo-phone-rudjosz',
-    arrow: true,
-    titleMain: 'Смартфоны',
-    children1: [
-      { title: 'Apple iPhone', count: 123, arrow: false },
-      { title: 'Смартфоны',    count: 227, arrow: true },
-      { title: 'iPhone 16',    count: 120, arrow: false },
-      { title: 'Складные',    count: 30, arrow: false },
-      { title: 'realme',    count: 120, arrow: false },
-      { title: 'Huawei Mate X6',    count: 100, arrow: false },
-      { title: 'Кнопочные',    count: 23, arrow: false },
-      { title: 'Домашние',    count: 17, arrow: false },
-      { title: 'Samsung',    count: 27, arrow: false }
-    ],
-    titleSecondary: 'Гаджеты',
-    children2: [
-      { title: 'Смарт-часы',   count: 15 },
-      { title: 'Смарт-кольца', count: 34 },
-      { title: 'Наушники', count: 21 },
-      { title: 'Гарнитуры', count: 12 },
-      { title: 'Портативное аудио', count: 42 },
-      { title: 'Умные гаджеты', count: 46 },
-      { title: 'Очки VR', count: 49 },
-      { title: 'Для блогеров', count: 32 },
-    ]
-  },
-  {
-    title: 'Ноутбуки и компьютеры',
-    icon: 'svgo-laptop',
-    arrow: true
-  },
-  {
-    title: 'Телевизоры и цифровое ТВ',
-    icon: 'svgo-tv',
-    arrow: true
-  },
-  {
-    title: 'Аудиотехника',
-    icon: 'svgo-audio',
-    arrow: true
-  },
-  {
-    title: 'Акции',
-    icon: 'svgo-stock-bg',
-    arrow: false
-  },
-  {
-    title: 'Новинки',
-    icon: 'svgo-new',
-    arrow: false
-  }
-  // …добавь остальные пункты
-]
+const emit = defineEmits(['close'])
 
 /* ——— реактивность ——— */
-const active  = ref(0)
-const current = computed(() => items[active.value])
+const active  = ref(props.defaultActive ?? 0)
+const current = computed(() => props.items[active.value])
 
-/* ——— закрытие меню ——— */
-const emit = defineEmits(['close'])
+/* ——— закрытие по Escape и клику вне ——— */
 const root = ref<HTMLElement | null>(null)
 
 function onClick(e: MouseEvent) {
-  const clickedInside = root.value?.contains(e.target as Node)
-  const clickedBurger = props.ignoreElement?.contains?.(e.target as Node)
-  if (!clickedInside && !clickedBurger) {
-    emit('close')
-  }
+  const inside = root.value?.contains(e.target as Node)
+  const onBurger = props.ignoreElement?.contains?.(e.target as Node)
+  if (!inside && !onBurger) emit('close')
 }
 function onKey(e: KeyboardEvent) {
   if (e.key === 'Escape') emit('close')
@@ -133,7 +88,7 @@ function onKey(e: KeyboardEvent) {
 
 onMounted(() => {
   window.addEventListener('keydown', onKey)
-  document.addEventListener('click', onClick, true)   // capture = true
+  document.addEventListener('click', onClick, true)
 })
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)

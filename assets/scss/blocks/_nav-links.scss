@@ -1,0 +1,54 @@
+@use '../variables' as *;
+@use '../mixins'    as *;
+
+.nav-links {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  a {
+    background: $color-bg-light;
+    padding: 11px 30px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    color: $color-text;
+    &:last-child {
+      margin-right: 0;
+    }
+    svg {
+      margin-right: 10px;
+      color: rgba($color-primary, 0.5);
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+    &:hover {
+      color: $color-primary;
+      svg {
+        color: $color-primary;
+      }
+    }
+  }
+  &--cta {
+    a {
+      padding: 11px;
+      color: $color-primary;
+
+      svg {
+        color: $color-primary;
+        font-size: 16px;
+      }
+
+      &:hover {
+        background: $color-primary;
+        color: $color-bg;
+
+        svg {
+          color: $color-bg;
+        }
+      }
+    }
+  }
+}
