@@ -59,6 +59,7 @@ const items = [
   {
     title: 'Смартфоны и гаджеты',
     icon: 'svgo-phone-rudjosz',
+    arrow: true,
     titleMain: 'Смартфоны',
     children1: [
       { title: 'Apple iPhone', count: 123, arrow: false },
